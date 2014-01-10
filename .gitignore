@@ -1,11 +1,8 @@
-<<<<<<< HEAD
 build/**
 src/**
 results/**
-=======
 .*
 # do not allow any image-related files
 *.image
 *.sources
 *.changes
->>>>>>> 1eb99b8... added tons of git ignores
