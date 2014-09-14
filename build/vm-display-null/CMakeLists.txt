@@ -1,0 +1,16 @@
+# This is automatically generated file using PharoFreeBSDConfig on 14 September 2014 2:36:39.736716 pm
+cmake_minimum_required(VERSION 2.6.2)
+project("vm-display-null")
+include(../directories.cmake)
+message("Adding module: vm-display-null")
+add_definitions(-DNO_VM_PROFILE=1 -fno-caller-saves -DCOGMTVM=0 -DIMAGE_ENV_NAME="PHARO_IMAGE" -DIMAGE_DIALECT_NAME="pharo" -DITIMER_HEARTBEAT=1 -DDEBUGVM=0 -DLSB_FIRST=1 -O2 -DUSE_GLOBAL_STRUCT=0 -m32 -DDEFAULT_IMAGE_NAME="pharo.image" -DNDEBUG -DENABLE_FAST_BLT -g0 -D_GNU_SOURCE -msse2 -fno-tree-pre)
+add_definitions(-fPIC -DPIC)
+set(sources  "${targetPlatform}/vm-display-null/sqUnixDisplayNull")
+add_library(vm-display-null SHARED ${sources})
+include_directories(${crossDir}/plugins/FilePlugin)
+include_directories(${targetPlatform}/plugins/B3DAcceleratorPlugin)
+include_directories(${crossDir}/plugins/B3DAcceleratorPlugin)
+set(LIBRARY_OUTPUT_PATH "${outputDir}")
+target_link_libraries(vm-display-null ${LINKLIBS})
+set_target_properties(vm-display-null PROPERTIES PREFIX "" SUFFIX "" 
+			LINK_FLAGS -m32)
