@@ -47,3 +47,6 @@ matrix:
 # could be easily fixed with a different CMakeLists.txt
   allow_failures:
     - os: osx
+
+after_failure:
+   -  find image -executable -type f -exec ldd {} \;
