@@ -3,9 +3,10 @@ os:
   - linux
   - osx
 
-compiler:
-  - gcc
-  - clang
+# can not select the compiler yet...
+#compiler:
+#  - gcc
+#  - clang
 
 addons:
   apt:
@@ -42,8 +43,7 @@ addons:
 
 script: 
   - scripts/build.sh
-# broken because it loads a pre-spur image
-#  - scripts/test.sh
+  - scripts/test.sh
 
 matrix:
 # Ignore failures with OSX as the build forces to be build for OSX 10.6 and

@@ -50,11 +50,11 @@ fi
 
 
 # RUN TEST IMAGE ==============================================================
-if [ "$OS" == "linux" ]; then
+if [ "$TMP_OS" == "linux" ]; then
 	HEADLESS="--nodisplay"
 else
 	HEADLESS="--headless"
 fi
-	
-TEST_IMAGE=`"$SCRIPT_DIR/../image/newVMTestImage.sh"`
+
+TEST_IMAGE="$SCRIPT_DIR/../image/generator.image"
 "$PHARO_TEST_VM" $HEADLESS "$TEST_IMAGE" test ".*"
