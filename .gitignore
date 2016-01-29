@@ -1,4 +1,3 @@
-.*
 # do not allow any image-related files
 *.image
 *.sources
