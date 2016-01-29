@@ -56,13 +56,10 @@ else
 	HEADLESS="--headless"
 fi
 
+wget http://files.pharo.org/sources/PharoV40.sources.zip
+unzip PharoV40.sources.zip
 TEST_IMAGE="$SCRIPT_DIR/../image/generator.image"
 "$PHARO_TEST_VM" $HEADLESS "$TEST_IMAGE" eval --save "
-Metacello new 
-	baseline: 'OSSubprocess';
-	repository: 'filetree://repository';
-	load.
-	
 	Gofer it
 		url: 'http://smalltalkhub.com/mc/Pharo/Pharo50Inbox/main';
 		package: 'SLICE-Issue-17490-Command-Line-Handler-test-runner-should-print-a-small-stack-for-failures-and-errors';
