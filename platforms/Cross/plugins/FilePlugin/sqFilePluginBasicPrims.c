@@ -34,6 +34,7 @@
 
 #include "FilePlugin.h"
 #include <limits.h> /* for PATH_MAX */
+#include <sys/stat.h>
 
 
 /***
@@ -302,10 +303,43 @@ sqFileFdOpen(SQFile *sqFile, int fd, sqInt writeFlag)
 	return sqFileFileOpen(sqFile, file, writeFlag);
 }
 
+static int
+isFile(FILE *file)
+{
+	struct stat buf;
+	int rc = fstat(fileno(file), &buf);
+	/* assume it is a file if we can't stat it */
+	if (rc != 0)
+		return true;
+
+	/* pick the types we know that are files */
+	switch (buf.st_mode & S_IFMT) {
+	case S_IFIFO: /* named pipe */
+	case S_IFDIR: /* BSD allows to open directories */
+	case S_IFREG: /* regular file */
+	case S_IFLNK: /* symlink */
+	case S_IFCHR: /* Character device like /dev/ttyUSB0 */
+	case S_IFBLK: /* Block device like /dev/sda1 */
+		return 1;
+	default:
+		return 0;
+	}
+}
+
 sqInt
 sqFileFileOpen(SQFile *sqFile, FILE *file, sqInt writeFlag)
 {
 	setFile(sqFile, file);
+	if (isFile(file)) {
+		/* compute and cache file size */
+		fseek(file, 0, SEEK_END);
+		setSize(sqFile, ftell(file));
+		fseek(file, 0, SEEK_SET);
+	} else {
+		sqFile->isStdioStream = true;
+		setSize(sqFile, 0);
+		sqFile->lastChar = EOF;
+	}
 	setSize(sqFile, 0);
 	sqFile->sessionID = thisSession;
 	sqFile->lastOp = UNCOMMITTED;
