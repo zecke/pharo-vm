@@ -115,3 +115,10 @@ deploy:
     on:
       branch: master
       repo: pharo-project/pharo-vm
+
+after_success:
+  - pip install --user benchupload
+  - python -mbenchupload
+after_failure:
+  - pip install --user benchupload
+  - python -mbenchupload
